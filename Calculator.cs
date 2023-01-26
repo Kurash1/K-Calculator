@@ -34,7 +34,7 @@ namespace Calculator
                             if (double.TryParse(left, out double dleft) && double.TryParse(right, out double dright))
                                 equation.Insert(leftstart, dleft - dright);
                             else
-                                equation.Insert(leftstart, "Error");
+                                equation.Insert(leftstart, ReplaceFirst(left, right, ""));
                         }
                         break;
                     case '*':
@@ -153,6 +153,13 @@ namespace Calculator
                 end = i;
                 return right.ToString();
             }
+        }
+        private static string ReplaceFirst(string original, string oldValue, string newValue)
+        {
+            int index = original.IndexOf(oldValue);
+            if (index < 0)
+                return original;
+            return original.Substring(0, index) + newValue + original.Substring(index + oldValue.Length);
         }
     }
 }
