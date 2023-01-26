@@ -110,41 +110,6 @@ namespace Calculator
                 }
             }
 
-            for (int i = 0; i < equation.Length; i++)
-            {
-                if (!operators.Contains(equation[i]))
-                    continue;
-                string left = getleft(i, out int leftstart);
-                string right = getright(i, out int rightend);
-                if (left == "")
-                    continue;
-                if (right == "")
-                    continue;
-                switch (equation[i])
-                {
-                    case '+':
-                        {
-                            equation.Remove(leftstart, rightend - leftstart);
-                            if (float.TryParse(left, out float fleft) && float.TryParse(right, out float fright))
-                                equation.Insert(leftstart, fleft + fright);
-                            else
-                                equation.Insert(leftstart, left + right);
-                        }
-                        break;
-                    case '-':
-                        {
-                            equation.Remove(leftstart, rightend - leftstart);
-                            if (float.TryParse(left, out float fleft) && float.TryParse(right, out float fright))
-                                equation.Insert(leftstart, fleft - fright);
-                            else
-                                equation.Insert(leftstart, left.Replace(right, ""));
-                        }
-                        break;
-                }
-            }
-
-
-
             return equation.ToString();
 
             string getleft(int i, out int start)
@@ -188,13 +153,6 @@ namespace Calculator
                 end = i;
                 return right.ToString();
             }
-        }
-        private static string ReplaceFirst(string original, string oldValue, string newValue)
-        {
-            int index = original.IndexOf(oldValue);
-            if (index < 0)
-                return original;
-            return original.Substring(0, index) + newValue + original.Substring(index + oldValue.Length);
         }
     }
 }
